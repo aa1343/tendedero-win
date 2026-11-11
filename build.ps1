@@ -1,4 +1,4 @@
-<#
+﻿<#
     Builds the portable Windows folder: dist\Tendedero
 
     - copies src\ into dist\Tendedero\resources\app\src
@@ -41,7 +41,7 @@ Copy-Item (Join-Path $root 'src') $appDir -Recurse -Force
 Copy-Item (Join-Path $root 'package.json') $appDir -Force
 
 # 3) documents next to the executable
-foreach ($doc in 'README.md', 'README.en.md', 'LICENSE', 'NOTICE.md') {
+foreach ($doc in 'README.md', 'README.zh-CN.md', 'LICENSE', 'NOTICE.md') {
     $from = Join-Path $root $doc
     if (Test-Path $from) { Copy-Item $from $dist -Force }
 }

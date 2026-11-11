@@ -1,129 +1,136 @@
 # Tendedero for Windows
 
-> 一个 macOS 小工具的 **Windows 非官方移植版**：截图和复制的内容挂在屏幕顶端的一根晾衣绳上，
-> 指针停到屏幕顶边，绳子就带着卡片滑下来；移开就收回。
+> An **unofficial Windows port** of a tiny macOS utility: screenshots and clipboard
+> copies hang on a clothesline at the top of the screen. Rest the pointer at the top
+> edge and the line slides down with its cards; move away and it tucks itself back.
 >
-> 原版：[**alejandrobujan/tendedero**](https://github.com/alejandrobujan/tendedero)（MIT，作者 Alejandro Buján）。
-> 本项目是照它的 Swift 源码逐条对照重写的 Windows 实现，**与原项目无关联、非官方**；
-> 原版的名字和图标不在 MIT 授权范围内，这里用的是代码绘制的自有图标，不含任何原版素材。
+> Original: [**alejandrobujan/tendedero**](https://github.com/alejandrobujan/tendedero)
+> (MIT, by Alejandro Buján). This is a from-scratch Windows implementation written
+> against that project's Swift sources. It is **unofficial and not affiliated** with
+> the original. The original name and icon are not covered by the MIT licence; this
+> port ships its own code-drawn icon and no original artwork.
 
 ```
                                             ╭─╮ ╭─╮ ╭─╮
-   ──●──────────────────────────────────────┴─┴─┴─┴─┴──────────   ← 晾衣绳
-   (指针停在屏幕顶边 0.25 秒，绳子和卡片一起滑下来)
+   ──●──────────────────────────────────────┴─┴─┴─┴─┴──────────   ← the line
+   (rest the pointer at the top edge for 0.25 s and it slides down)
 ```
 
-## 怎么运行
+## Running it
 
-**便携包**（推荐）：解压后双击 **`Start Tendedero.vbs`**（无黑窗）或 `Start Tendedero.cmd`。
+**Portable build** (recommended): unzip and double-click **`Start Tendedero.vbs`**
+(no console window) or `Start Tendedero.cmd`.
 
-- 不依赖 Node、Python 或任何已装软件，整个文件夹拷到别的 Windows 机器即可运行；
-- 启动后：屏幕**顶边中间**停留约 0.25 秒 → 晾衣绳滑下来；托盘出现 T 恤图标，右键是全部菜单；
-- 全程无窗口、无网络请求、不上传任何数据。
+- No Node, no Python, no runtime to install; copy the folder to any Windows machine.
+- On launch: rest the pointer at the **top centre** of the screen for ~0.25 s and the
+  line comes down; a T-shirt icon appears in the tray, its right-click menu is everything.
+- No main window, no network requests, nothing is ever uploaded.
 
-**从源码构建**：
+**Building from source**:
 
 ```powershell
-npm install          # 拉取 Electron（仅开发期依赖）
-npm run dist         # 生成 dist\Tendedero 便携目录（自带 Electron）
+npm install          # Electron, development dependency only
+npm run dist         # writes the self-contained dist\Tendedero folder
 ```
 
-`build.ps1` 只做三件事：把 `src\` 复制进 `dist\Tendedero\resources\app\`、复制 Electron 运行时、
-写两个启动器；语言包只保留 `zh-CN` / `en-US` 以缩小体积。
+`build.ps1` copies `src\` into `dist\Tendedero\resources\app\`, copies the Electron
+runtime and writes the two launchers. Locales are trimmed to `zh-CN` / `en-US`.
 
-## 功能
+## Features
 
 | | |
 |---|---|
-| **截图即挂** | `Ctrl+Alt+S` 立刻截一张全屏挂上绳；也可监视系统截图文件夹，新截图自动上绳 |
-| **复制即挂** | 图片 / 文字 / 链接三类可分别开关；密码框内容不挂 |
-| **上绳/取下** | 单击复制、双击打开、拖出到别的程序、点左上角叉取下、悬停按 `Del` 快速取下 |
-| **固定** | `Pin` 的卡片永不被自动清理；`Ctrl+Z` 撤销取下/固定（最多 20 步） |
-| **搜索** | `Ctrl+Alt+F` 在绳上搜索，截图里的字也能搜（本机 Windows OCR，逐文件缓存） |
-| **大小与容量** | 小 / 中 / 大；绳上保留「放得下的数量」或 25 / 50 / 100 张 |
-| **自动清理** | 双时钟：默认**绳上 1 天取下**（进 App 自己的回收站）、**回收站 3 天删除** |
-| **中英双语** | 托盘 → 语言 → 中文 / English，切换立即生效 |
-| **零依赖零联网** | 只有 Electron 运行时；数据只落本机 |
+| **A capture hangs instantly** | `Ctrl+Alt+S` grabs the screen and hangs it; the system screenshot folder can be watched too |
+| **Copies hang too** | Images / text / links, each switchable; nothing is ever kept from a password field |
+| **Acting on a card** | Click copies, double-click opens, drag it out to another app, the corner cross takes it down, `Del` on hover does the same |
+| **Pin** | Pinned cards are never auto-cleaned; `Ctrl+Z` undoes take-downs and pins (20 steps) |
+| **Search** | `Ctrl+Alt+F` searches the line, including text recognised inside screenshots (local Windows OCR, cached per file) |
+| **Size & capacity** | Small / medium / large; keep as many as fit, or 25 / 50 / 100 |
+| **Auto-clean** | Two clocks: cards come down after **1 day** by default (into the app's own Trash), and the Trash is emptied after **3 days** |
+| **Bilingual UI** | Tray → Language → 中文 / English, applied immediately |
+| **No dependencies, no network** | Just the Electron runtime; all data stays on the machine |
 
-## 快捷键
+## Shortcuts
 
-| 快捷键 | 作用 |
+| Shortcut | What it does |
 |---|---|
-| `Ctrl+Alt+T` | 显示 / 收起晾衣绳（托盘 → 快捷键 可改） |
-| `Ctrl+Alt+F` | 在绳上搜索 |
-| `Ctrl+Alt+S` | 立刻截一张全屏挂上绳 |
-| `Ctrl+Z` | 撤销刚才的取下 / 固定（最多 20 步） |
+| `Ctrl+Alt+T` | Show / hide the line (configurable in the tray) |
+| `Ctrl+Alt+F` | Search the line |
+| `Ctrl+Alt+S` | Take a screenshot right now |
+| `Ctrl+Z` | Undo the last take-down / pin (up to 20 steps) |
 
-## 卡片手势
+## Card gestures
 
-| 手势 | 作用 |
+| Gesture | What it does |
 |---|---|
-| 单击 | 复制（文字/链接进剪贴板，图片就是图片本身），显示「已复制」 |
-| 双击 | 打开（链接开浏览器，其余用默认程序） |
-| 长按 450ms | 打开编辑（图片→默认编辑器；便签→直接打开文件） |
-| 中键单击 | 快速查看；`Shift+点击` 多选 |
-| 拖出 | 拖到资源管理器文件夹＝放进那个文件夹；拖到接受文件的应用（写字板、聊天窗口等）＝对方直接拿到这张图/这个文件；卡片留在绳上 |
-| 左上角叉 | 未固定且是收纳目录里的文件→移入 App 回收站（可撤销）；别处的文件→只从绳上取下；已固定→取消固定 |
-| `Del`（悬停卡片） | 快速取下当前指针下的卡片 |
-| 右键 | 完整菜单；点菜单外任意位置即关闭 |
-| 滚轮 | 绳上内容多于一屏时左右滚动 |
-| `Esc` | 清除多选 / 退出搜索 |
+| Click | Copy — text and links go to the clipboard, an image is the image; a "Copied" badge shows |
+| Double-click | Open (links in the browser, anything else with its default app) |
+| Hold 450 ms | Open for editing (image → default editor, note → the file itself) |
+| Middle click | Quick look; `Shift+click` selects |
+| Drag out | Onto an Explorer folder = put it there; onto an app that accepts files (WordPad, a chat window…) = that app gets the file. The card stays on the line |
+| Corner cross | Our own inbox file → into the app Trash (undoable); anything else → off the line; a pinned card → unpin |
+| `Del` on hover | Take the card under the pointer down |
+| Right click | Full menu; a click anywhere outside closes it |
+| Wheel | Scrolls the line once it holds more than a screenful |
+| `Esc` | Clear the selection / leave search |
 
-## 托盘菜单
+## Tray menu
 
-- **立即截一张图** / **接管截图** / **同时监视文件夹**（最多再加 3 个）
-- **挂上复制的内容**：图片 / 文字 / 链接
-- **放下晾衣绳**：指针停在屏幕顶边时 / 有新内容挂上时 / 在全屏应用之上
-- **绳上保留**、**自动清理**（绳上取下 / 回收站删除 / 现在清理一次）、**大小**、**悬停时放大**
-- **快捷键**（含截图快捷键）、**声音**、**开机自启**、**打开数据文件夹**、**语言**、**退出**
+- **Take a screenshot now**, **Handle screenshots**, **Also watch folders** (up to 3 more)
+- **Hang what you copy**: images, text, links
+- **Bring the line down**: when the pointer rests at the top / when something new hangs / over full-screen apps
+- **Keep on line**, **Auto-clean** (off the line / out of the Trash / clean up now), **Size**, **Zoom on hover**
+- **Shortcut** (and the screenshot shortcut), **Sounds**, **Open at login**, **Open data folder**, **Language**, **Quit**
 
-## 数据在哪里
+## Where the data lives
 
-一切都在 `%APPDATA%\tendedero-win\`（托盘 →「打开数据文件夹」直达）：
+Everything is under `%APPDATA%\tendedero-win\` (tray → "Open data folder"):
 
-| 路径 | 内容 |
+| Path | Contents |
 |---|---|
-| `Screenshots\` | 截图与复制的图片（`截图 …`、`剪贴板 …`） |
-| `Notes\` | 复制的文字（`文字 *.txt`）、链接（`链接 *.txt`）、Markdown |
-| `Trash\` | 从绳上取下的自有文件（撤销的来源；超过自动清理天数会被真正删除） |
-| `SearchIndex.json` | 截图文字索引（本机 Windows OCR，逐文件缓存） |
-| `settings.json` | 全部开关、语言与绳上的清单 |
+| `Screenshots\` | Captures and copied images |
+| `Notes\` | Copied text, links and Markdown |
+| `Trash\` | Files taken down from the line (the undo source; deleted for good once auto-clean expires) |
+| `SearchIndex.json` | OCR text index, cached per file |
+| `settings.json` | Every switch, the language and what hangs on the line |
 
-卸载 = 删掉这个文件夹 + 删掉程序文件夹，无注册表、无服务、无驱动。
+Uninstalling means deleting that folder and this one: no registry keys, no service, no driver.
 
-## 与 macOS 原版的差异（都有原因）
+## Differences from the macOS original (each for a reason)
 
-| 原版 | Windows 版 |
+| Original | Windows port |
 |---|---|
-| 菜单栏图标 | 托盘图标（代码绘制的 T 恤 PNG） |
-| 接管系统截图设置（Inbox） | 自带 `Ctrl+Alt+S` 截图 + 监视截图文件夹 |
-| Force Click（触控板用力点） | 中键单击 |
-| ⌘ 键 | Ctrl 键 |
-| 共享菜单（AirDrop 等） | 打开文件所在位置（资源管理器） |
-| Markup / 裁剪录像 | 用系统默认编辑器打开 |
-| 玻璃材质真实背景模糊 | 磨砂绘制（Windows 不允许跨窗口取景模糊） |
-| Vision OCR | Windows.Media.Ocr 本机引擎 |
-| 钉在所有桌面空间 | Windows 虚拟桌面不可寻址，窗口停在当前桌面 |
-| 菜单栏常驻 | 屏幕顶边 0.25 秒停顿 / 快捷键唤出 |
-| 资源管理器里没有「桌面上的截图」 | 自有 `Screenshots\`，不污染桌面 |
+| Menu bar icon | Tray icon (a T-shirt PNG drawn in code) |
+| Takes over the system screenshot settings (Inbox) | Own `Ctrl+Alt+S` capture plus a watched screenshot folder |
+| Force Click | Middle click |
+| ⌘ | Ctrl |
+| Share sheet (AirDrop…) | Show in Explorer |
+| Markup / screen recording trim | Opens the file in the default editor |
+| Real glass blur | Painted frost (Windows cannot blur one window over another) |
+| Vision OCR | Windows.Media.Ocr, on-device |
+| Pinned to every Space | Virtual desktops are not addressable; the window stays on the current one |
+| Always in the menu bar | 0.25 s rest at the top edge, or a shortcut |
+| No "screenshots on the Desktop" leftover | Own `Screenshots\` folder, the Desktop stays clean |
 
-## 开发
+## Development
 
 ```powershell
-npm start                                          # electron . 跑源码
-npx electron . --remote-debugging-port=9335        # 带调试端口
+npm start                                          # electron . against the sources
+npx electron . --remote-debugging-port=9335        # with a debug port
 ```
 
-渲染色带 / 命中区 / 拖拽状态都能从渲染器里读到：`window.td.diag()`（`revealed`、`ignoringMouse`、
-`live`、`hitCount`、`dragCalls`、`tickErrors`…）。卡片命中区由渲染器上报，主进程 30Hz 轮询指针，
-据此决定揭示、收起与鼠标穿透——所有「点不准 / 不收起」类问题都能用这一条链定位。
+The renderer exposes `window.td.diag()` — `revealed`, `ignoringMouse`, `live`, `hitCount`,
+`dragCalls`, `tickErrors` and friends. Card hit rectangles are reported by the renderer and
+the main process polls the pointer at 30 Hz to decide reveal, retract and click-through;
+most "clicked but nothing happened" bugs are visible in that chain.
 
-## 反馈
+## Feedback
 
-问题、建议、想加的功能，都发到 Issues（#1 那条里写了报问题需要带哪些信息）。
+Bugs, ideas, feature requests: the Issues tab (#1 lists what to include in a report).
 
-## 许可
+## Licence
 
-- 原版作者 **Alejandro Buján**，MIT 许可。
-- 本移植版代码同样 MIT，见 `LICENSE`；来源与商标说明见 `NOTICE.md`。
-- 英文说明：[README.en.md](README.en.md)
+- Original author **Alejandro Buján**, MIT licensed.
+- This port is MIT licensed as well — see `LICENSE`. Provenance and trademark notes are in
+  `NOTICE.md`.
+- Chinese: [README.zh-CN.md](README.zh-CN.md)
