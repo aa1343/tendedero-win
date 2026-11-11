@@ -124,6 +124,10 @@ The renderer exposes `window.td.diag()` — `revealed`, `ignoringMouse`, `live`,
 the main process polls the pointer at 30 Hz to decide reveal, retract and click-through;
 most "clicked but nothing happened" bugs are visible in that chain.
 
+## Feedback
+
+Bugs, ideas, feature requests: the Issues tab (#1 lists what to include in a report).
+
 ## Licence
 
 - Original author **Alejandro Buján**, MIT licensed.

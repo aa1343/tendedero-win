@@ -118,6 +118,10 @@ npx electron . --remote-debugging-port=9335        # 带调试端口
 `live`、`hitCount`、`dragCalls`、`tickErrors`…）。卡片命中区由渲染器上报，主进程 30Hz 轮询指针，
 据此决定揭示、收起与鼠标穿透——所有「点不准 / 不收起」类问题都能用这一条链定位。
 
+## 反馈
+
+问题、建议、想加的功能，都发到 Issues（#1 那条里写了报问题需要带哪些信息）。
+
 ## 许可
 
 - 原版作者 **Alejandro Buján**，MIT 许可。
