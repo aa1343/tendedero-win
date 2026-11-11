@@ -1,0 +1,14 @@
+# Windows artefacts and local state
+node_modules/
+dist/
+out/
+*.zip
+*.log
+
+# Not for publication: extracted original macOS source, notes, screenshots
+tendedero-main/
+spec/
+shots/
+drop-test/
+test/
+.codex/

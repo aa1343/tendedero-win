@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<title>Tendedero</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stage">
+    <div id="lineRoot">
+      <!-- The rope lives inside lineRoot: tucking slides the cards AND the
+           rope up together, so nothing of the line is left on the desktop. -->
+      <svg id="rope" width="0" height="60"></svg>
+      <div id="cards"></div>
+      <div id="knot"><svg width="12" height="18" viewBox="0 0 12 18"></svg></div>
+      <div id="hint"></div>
+    </div>
+    <div id="menu"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

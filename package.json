@@ -1,0 +1,14 @@
+{
+  "name": "tendedero-win",
+  "version": "1.0.0",
+  "description": "Windows port of Tendedero — screenshots and clipboard copies hang on a clothesline at the top of your screen.",
+  "license": "MIT",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "powershell -NoProfile -ExecutionPolicy Bypass -File build.ps1"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}
